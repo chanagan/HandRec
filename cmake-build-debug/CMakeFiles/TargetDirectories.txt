@@ -1,0 +1,3 @@
+/Users/chrishanagan/CLionProjects/HandRec/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/chrishanagan/CLionProjects/HandRec/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/chrishanagan/CLionProjects/HandRec/cmake-build-debug/CMakeFiles/HandRec.dir
