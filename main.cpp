@@ -13,7 +13,7 @@ END_EVENT_TABLE()
 IMPLEMENT_APP(MainApp)
 
 bool MainApp::OnInit() {
-    MainFrame *MainWin = new MainFrame(_("Hello World"),
+    MainFrame *MainWin = new MainFrame(_("Hand Receipt Inventory"),
                                        wxDefaultPosition, wxSize(900, 600));
     MainWin->Show(true);
     SetTopWindow(MainWin);
