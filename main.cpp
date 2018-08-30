@@ -13,7 +13,7 @@ END_EVENT_TABLE()
 IMPLEMENT_APP(MainApp)
 
 bool MainApp::OnInit() {
-    MainFrame *MainWin = new MainFrame(_("Hand Receipt Holder"),
+    MainFrame *MainWin = new MainFrame(_("Hand Receipt Manager"),
                                        wxDefaultPosition, wxSize(900, 600));
     MainWin->Show(true);
     SetTopWindow(MainWin);
