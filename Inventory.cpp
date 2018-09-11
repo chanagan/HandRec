@@ -93,6 +93,15 @@ bool Inventory::is_not_used(wxString wrk_str) {
     if (wrk_str.Find("Filler_5") != wxNOT_FOUND) {
         return TRUE;
     }
+    if (wrk_str.Find("DISCREPANCIES") != wxNOT_FOUND) {
+        return TRUE;
+    }
+    if (wrk_str.Find("Signature") != wxNOT_FOUND) {
+        return TRUE;
+    }
+    if (wrk_str.Find("INDICATED ABOVE") != wxNOT_FOUND) {
+        return TRUE;
+    }
     if (wrk_str.StartsWith("Inv Doc")) {
         return TRUE;
     }
