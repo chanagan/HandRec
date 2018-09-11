@@ -36,12 +36,10 @@ void Inventory::LoadInventory(wxString curr_path) {
             inv_date = line_fields[1];
             continue;
         }
-//        if (lStr.IsEmpty()) {
-//            continue;
-//        }
-//        if (lStr.Find("FE") != wxNOT_FOUND) {
-//            continue;
-//        }
+        if (line_fields[0] == "(Inv") {
+            inv_doc_num = line_fields[3];
+            continue;
+        }
         inv_lines->Add(lStr);
 //        (*MainEditBox) << lStr << "\n";
 //
@@ -84,9 +82,9 @@ bool Inventory::is_not_used(wxString wrk_str) {
     if (wrk_str.Find("REMARK :") != wxNOT_FOUND) {
         return TRUE;
     }
-    if (wrk_str.Find("rial / Equip") != wxNOT_FOUND) {
-        return TRUE;
-    }
+//    if (wrk_str.Find("rial / Equip") != wxNOT_FOUND) {
+//        return TRUE;
+//    }
     if (wrk_str.Find("ORIED QTY :") != wxNOT_FOUND) {
         return TRUE;
     }
@@ -99,7 +97,13 @@ bool Inventory::is_not_used(wxString wrk_str) {
     if (wrk_str.Find("Signature") != wxNOT_FOUND) {
         return TRUE;
     }
+    if (wrk_str.Find("DODAAC") != wxNOT_FOUND) {
+        return TRUE;
+    }
     if (wrk_str.Find("INDICATED ABOVE") != wxNOT_FOUND) {
+        return TRUE;
+    }
+    if (wrk_str.Find("UIC") != wxNOT_FOUND) {
         return TRUE;
     }
     if (wrk_str.StartsWith("Inv Doc")) {
@@ -109,6 +113,9 @@ bool Inventory::is_not_used(wxString wrk_str) {
         return TRUE;
     }
     if (wrk_str.StartsWith("(Listing")) {
+        return TRUE;
+    }
+    if (wrk_str.StartsWith("(LGOBE)")) {
         return TRUE;
     }
     if (wrk_str.StartsWith("Date Pre")) {

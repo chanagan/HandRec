@@ -13,6 +13,7 @@ class Inventory {
     wxString first_line;
     wxString last_line;
     wxString inv_date;
+    wxString inv_doc_num;
 
     wxArrayString *inv_lines;
 public:
