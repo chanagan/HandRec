@@ -67,11 +67,15 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         inventory->LoadInventory(CurrentDocPath);
         num_lines = (int) inventory->line_count();
 
-        lStr.Printf(wxT("Number of lines: %d\n"), num_lines);
+        lStr.Printf(wxT("Document Number: %s\n"), inventory->inv_doc_num());
+        (*MainEditBox) << lStr;
+        lStr.Printf(wxT("Document Date: %s\n"), inventory->inv_doc_date());
+        (*MainEditBox) << lStr;
+        lStr.Printf(wxT("Number of lines: %d\n\n"), num_lines);
         (*MainEditBox) << lStr;
 
         for (int i = 0; i < num_lines; i ++) {
-            lStr.Printf("%s\n", inventory->get_inv_line((size_t) i));
+            lStr.Printf("%s\n", inventory->inv_line((size_t) i));
             (*MainEditBox) << lStr;
         }
 

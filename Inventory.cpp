@@ -13,20 +13,15 @@ void Inventory::LoadInventory(wxString curr_path) {
     wxArrayString line_fields;
     file.Open();
     wxString lStr;
-    inv_lines = new wxArrayString;
+    all_inv_lines = new wxArrayString;
 //    size_t fileNums;
 //    fileNums = file.GetLineCount();
 
-    num_of_lines = (int) file.GetLineCount();
+    num_of_lines = file.GetLineCount();
 
-//    lStr.Printf(wxT("Number of lines: %d\n"), (int) file.GetLineCount());
-//    (*MainEditBox) << lStr;
-//    lStr.Printf(wxT("First line: >%s<\n"), file.GetFirstLine().c_str());
-//    (*MainEditBox) << lStr;
-//    lStr.Printf(wxT("Last Line: >%s<\n\n"), file.GetLastLine().c_str());
-//    (*MainEditBox) << lStr;
-//
+
     for (lStr = file.GetFirstLine(); !file.Eof(); lStr = file.GetNextLine()) {
+        // if this a document filler line, ignore it
         if (is_not_used(lStr)) {
             continue;
         }
@@ -37,10 +32,10 @@ void Inventory::LoadInventory(wxString curr_path) {
             continue;
         }
         if (line_fields[0] == "(Inv") {
-            inv_doc_num = line_fields[3];
+            inv_num = line_fields[3];
             continue;
         }
-        inv_lines->Add(lStr);
+        all_inv_lines->Add(lStr);
 //        (*MainEditBox) << lStr << "\n";
 //
 //        lstr_splt = wxSplit(lStr, ' ');
@@ -53,10 +48,8 @@ void Inventory::LoadInventory(wxString curr_path) {
 //            wrkstr = lstr_splt.Item(tok_idx);
 //
     }
-
-//    }
     file.Close();
-    num_of_lines = (int) inv_lines->GetCount();
+    num_of_lines = (int) all_inv_lines->GetCount();
 
 }
 
