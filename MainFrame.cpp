@@ -5,7 +5,7 @@
 #include <wx/arrstr.h>
 #include "MainFrame.h"
 #include "Inventory.h"
-
+#include "InvStockItem.h"
 
 MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
         : wxFrame((wxFrame *) NULL, -1, title, pos, size) {
@@ -44,6 +44,7 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
     Inventory *inventory = new Inventory();
     wxString lStr;
     int number_lines;
+    InvStockItem * stockItem;
 
     wxFileDialog *OpenDialog = new wxFileDialog(
             this, _("Choose a file to open"), wxEmptyString, wxEmptyString,
@@ -75,6 +76,9 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         (*MainEditBox) << lStr;
 
         for (int i = 0; i < num_lines; i ++) {
+            stockItem = new InvStockItem(inventory);
+            tok_idx = stockItem->SetFirst(i);
+
             lStr.Printf("%s\n", inventory->inv_line((size_t) i));
             (*MainEditBox) << lStr;
         }

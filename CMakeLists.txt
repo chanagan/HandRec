@@ -11,7 +11,7 @@ find_package(wxWidgets REQUIRED COMPONENTS core base)
 include("${wxWidgets_USE_FILE}")
 DBG_MSG("found wxWidgets_USE_FILE : ${wxWidgets_USE_FILE}")
 
-set (SRCS main.cpp main.h MainFrame.cpp MainFrame.h Inventory.cpp Inventory.h)
+set (SRCS main.cpp main.h MainFrame.cpp MainFrame.h Inventory.cpp Inventory.h InvStockItem.cpp InvStockItem.h)
 
 add_executable(HandRec ${SRCS})
 #add_executable(first_wx_app main.cpp main.h)
