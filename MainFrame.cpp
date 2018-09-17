@@ -59,7 +59,7 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         wxArrayString lstr_splt;
         wxString wrkstr;
         size_t strlen;
-        size_t tok_idx;
+        size_t line_idx;
         int num_lines;
 
         CurrentDocPath = OpenDialog->GetPath();
@@ -77,10 +77,13 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
 
         for (int i = 0; i < num_lines; i ++) {
             stockItem = new InvStockItem(inventory);
-            tok_idx = stockItem->SetFirst(i);
-
             lStr.Printf("%s\n", inventory->inv_line((size_t) i));
             (*MainEditBox) << lStr;
+
+            line_idx = stockItem->SetFirst(i);
+
+            i = (int) line_idx;
+
         }
 
 //        wxTextFile file(CurrentDocPath);
@@ -106,8 +109,8 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
 //            if (lstr_splt.Item(0).Cmp("FE:")) {
 //                continue;
 //            }
-//            for (tok_idx = 0; tok_idx < strlen; tok_idx++) {
-//                wrkstr = lstr_splt.Item(tok_idx);
+//            for (line_idx = 0; line_idx < strlen; line_idx++) {
+//                wrkstr = lstr_splt.Item(line_idx);
 //
 //            }
 //

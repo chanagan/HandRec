@@ -6,14 +6,42 @@
 #include "InvStockItem.h"
 #include "Inventory.h"
 
-InvStockItem::InvStockItem(Inventory * inv_lines) {
+InvStockItem::InvStockItem(Inventory *inv_lines) {
     inventory = inv_lines;
 
 }
-size_t InvStockItem::SetFirst(size_t line_idx)
-{
+
+size_t InvStockItem::SetFirst(size_t line_idx) {
+    wxArrayString line_parts;
+    wxString string_idx, temp_string;
     size_t wrk_idx = line_idx;
+    size_t strlen, lines_used;
+    int loop_idx = 0;
 
     line_in = inventory->inv_line(wrk_idx);
+
+    line_parts = wxSplit(line_in, ' ');
+    strlen = line_parts.Count();
+
+    if (line_parts[0] == "(LIN)") {
+        temp_string = line_parts[1];
+        lines_used += 1;
+    }
+
+    string_idx = "none";
+    do {
+        line_parts = wxSplit(inventory->inv_line(wrk_idx), ' ');
+        string_idx = line_parts[0];
+        lines_used += 1;
+    } while (string_idx != "(LIN)");
+
+    wrk_idx += lines_used;
+//
+//            if (line_parts.Item(0).Cmp("FE:")) {
+//                continue;
+//            }
+
+
+
     return wrk_idx;
 }
