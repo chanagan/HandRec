@@ -3,23 +3,33 @@
 //
 
 #include <wx/wx.h>
+#include <wx/listimpl.cpp>
 #include "InvStockItem.h"
-#include "Inventory.h"
+#include "InventoryDocument.h"
 
-InvStockItem::InvStockItem(Inventory *inv_lines) {
+#include <wx/arrimpl.cpp>
+WX_DEFINE_OBJARRAY(ArrayOfMatnr);
+
+
+
+InvStockItem::InvStockItem(InventoryDocument *inv_lines) {
     inventory = inv_lines;
 
 }
 
 size_t InvStockItem::SetFirst(size_t line_idx) {
+
     wxArrayString line_parts;
     wxString string_idx, temp_string;
+    size_t inpt_count = inventory->line_count();
     size_t wrk_idx = line_idx;
     size_t strlen, lines_used;
     int loop_idx = 0;
     lines_used = 0;
 
     line_in = inventory->inv_line(wrk_idx);
+//    item_list = new wxList<size_t>();
+
 
     line_parts = wxSplit(line_in, ' ');
     strlen = line_parts.Count();
@@ -43,13 +53,16 @@ size_t InvStockItem::SetFirst(size_t line_idx) {
             nomen = string_idx;
         }
         if (string_idx == "(MATNR)") {
+            size_t this_item = wrk_idx;
+            list.Add(&this_item);
+
             niin = string_idx;
         }
         if (string_idx == "(QTY)") {
             quantity = string_idx;
         }
         lines_used ++;
-    } while (string_idx != "(LIN)");
+    } while (string_idx != "(LIN)" && wrk_idx < inpt_count);
 
 //    wrk_idx += lines_used;
 //
@@ -59,5 +72,5 @@ size_t InvStockItem::SetFirst(size_t line_idx) {
 
 
 
-    return wrk_idx;
+    return --wrk_idx;
 }

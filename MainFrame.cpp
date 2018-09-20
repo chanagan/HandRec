@@ -4,7 +4,7 @@
 #include <wx/textfile.h>
 #include <wx/arrstr.h>
 #include "MainFrame.h"
-#include "Inventory.h"
+#include "InventoryDocument.h"
 #include "InvStockItem.h"
 
 MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
@@ -41,7 +41,7 @@ void MainFrame::NewFile(wxCommandEvent & WXUNUSED(event)) {
 }
 
 void MainFrame::OpenFile(wxCommandEvent &event) {
-    Inventory *inventory = new Inventory();
+    InventoryDocument *inventory = new InventoryDocument();
     wxString lStr;
     int number_lines;
     InvStockItem * stockItem;

@@ -6,19 +6,24 @@
 #define HANDREC_INVSTOCKITEM_H
 
 #include <wx/wx.h>
-#include "Inventory.h"
+#include "InventoryDocument.h"
+
+WX_DECLARE_OBJARRAY(size_t, ArrayOfMatnr);
+
 
 class InvStockItem {
-    Inventory* inventory;
+    InventoryDocument* inventory;
     wxString line_in;
     wxString lin;
     wxString mpo;
     wxString nomen;
     wxString quantity;
     wxString niin;
+    ArrayOfMatnr list;
+
 public:
 
-    explicit InvStockItem(Inventory*  );
+    explicit InvStockItem(InventoryDocument*  );
     size_t SetFirst(size_t);
 
 };

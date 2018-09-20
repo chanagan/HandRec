@@ -7,7 +7,7 @@
 
 #include <wx/wx.h>
 
-class Inventory {
+class InventoryDocument {
     wxString CurrentDocPath;
     size_t num_of_lines;
     wxString first_line;

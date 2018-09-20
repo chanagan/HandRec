@@ -4,9 +4,9 @@
 #include <wx/textfile.h>
 #include <wx/arrstr.h>
 
-#include "Inventory.h"
+#include "InventoryDocument.h"
 
-void Inventory::LoadInventory(wxString curr_path) {
+void InventoryDocument::LoadInventory(wxString curr_path) {
     CurrentDocPath = curr_path;
 
     wxTextFile file(CurrentDocPath);
@@ -53,7 +53,7 @@ void Inventory::LoadInventory(wxString curr_path) {
 
 }
 
-bool Inventory::is_not_used(wxString wrk_str) {
+bool InventoryDocument::is_not_used(wxString wrk_str) {
     if (wrk_str.IsEmpty()) {
         return TRUE;
     }
