@@ -75,8 +75,8 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         lStr.Printf(wxT("Number of lines: %d\n\n"), num_lines);
         (*MainEditBox) << lStr;
 
+        stockItem = new InvStockItem(inventory);
         for (int i = 0; i < num_lines; i ++) {
-            stockItem = new InvStockItem(inventory);
             lStr.Printf("%s\n", inventory->inv_line((size_t) i));
             (*MainEditBox) << lStr;
 
@@ -85,7 +85,7 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
             i = (int) line_idx;
 
         }
-
+// TODO invdoc => list of stock_items - not stock_items list of matnr indexes
 //        wxTextFile file(CurrentDocPath);
 //        file.Open();
 //        size_t fileNums;
