@@ -6,6 +6,11 @@
 #define HANDREC_INVENTORY_H
 
 #include <wx/wx.h>
+//#include "InvStockItem.h"
+
+class InvStockItem;
+
+WX_DECLARE_OBJARRAY(InvStockItem, ArrayOfMatnr);
 
 class InventoryDocument {
     wxString CurrentDocPath;
@@ -16,6 +21,9 @@ class InventoryDocument {
     wxString inv_num;
 
     wxArrayString *all_inv_lines;
+
+    ArrayOfMatnr list;
+
 public:
     void LoadInventory(wxString curr_path);
     void FindStockItems();

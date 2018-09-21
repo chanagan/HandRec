@@ -7,6 +7,9 @@
 #include "InventoryDocument.h"
 #include "InvStockItem.h"
 
+#include <wx/arrimpl.cpp>
+WX_DEFINE_OBJARRAY(ArrayOfMatnr);
+
 void InventoryDocument::LoadInventory(wxString curr_path) {
     CurrentDocPath = curr_path;
     size_t line_idx = 0;
@@ -44,6 +47,8 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
             // this is the National Stock Number (NSN) and
             // each inventory item has a unique one of these
             invStockItem = new InvStockItem(line_fields[1], line_idx);
+            list.Add(invStockItem);
+
 //            size_t this_item = wrk_idx;
 //            list.Add(&this_item);
 

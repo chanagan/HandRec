@@ -8,19 +8,19 @@
 #include <wx/wx.h>
 #include "InventoryDocument.h"
 
-WX_DECLARE_OBJARRAY(size_t, ArrayOfMatnr);
+//WX_DECLARE_OBJARRAY(size_t, ArrayOfMatnr);
 
 
 class InvStockItem {
     size_t nsn_idx;     // index of this nsn in the document
-    InventoryDocument* inventory;
+//    InventoryDocument* inventory;
     wxString line_in;
     wxString lin;
     wxString mpo;
     wxString nomen;
     wxString quantity;
     wxString nsn;
-    ArrayOfMatnr list;
+//    ArrayOfMatnr list;
 
 public:
 
