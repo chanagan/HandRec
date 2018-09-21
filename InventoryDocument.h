@@ -18,6 +18,7 @@ class InventoryDocument {
     wxArrayString *all_inv_lines;
 public:
     void LoadInventory(wxString curr_path);
+    void FindStockItems();
 
     size_t line_count() {return num_of_lines;};
     wxString  inv_line(size_t which_line) {return all_inv_lines->Item( which_line);};

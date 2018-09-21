@@ -12,19 +12,21 @@ WX_DECLARE_OBJARRAY(size_t, ArrayOfMatnr);
 
 
 class InvStockItem {
+    size_t nsn_idx;     // index of this nsn in the document
     InventoryDocument* inventory;
     wxString line_in;
     wxString lin;
     wxString mpo;
     wxString nomen;
     wxString quantity;
-    wxString niin;
+    wxString nsn;
     ArrayOfMatnr list;
 
 public:
 
-    explicit InvStockItem(InventoryDocument*  );
+     InvStockItem(wxString  nsn_in, size_t lin_idx) ;
     size_t SetFirst(size_t);
+    void SetNSN(wxString input);
 
 };
 

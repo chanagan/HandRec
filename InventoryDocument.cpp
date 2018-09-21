@@ -5,9 +5,13 @@
 #include <wx/arrstr.h>
 
 #include "InventoryDocument.h"
+#include "InvStockItem.h"
 
 void InventoryDocument::LoadInventory(wxString curr_path) {
     CurrentDocPath = curr_path;
+    size_t line_idx = 0;
+
+    InvStockItem *invStockItem;
 
     wxTextFile file(CurrentDocPath);
     wxArrayString line_fields;
@@ -26,6 +30,7 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
             continue;
         }
 
+        // these are per document data
         line_fields = wxSplit(lStr, ' ');
         if (line_fields[0] == "(CurrentDate)") {
             inv_date = line_fields[1];
@@ -35,8 +40,19 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
             inv_num = line_fields[3];
             continue;
         }
+        if (line_fields[0] == "(MATNR)") {
+            // this is the National Stock Number (NSN) and
+            // each inventory item has a unique one of these
+            invStockItem = new InvStockItem(line_fields[1], line_idx);
+//            size_t this_item = wrk_idx;
+//            list.Add(&this_item);
+
+//            invStockItem-> nsn = string_idx;
+// TODO add the array for storing the stock items
+        }
+
         all_inv_lines->Add(lStr);
-//        (*MainEditBox) << lStr << "\n";
+        //        (*MainEditBox) << lStr << "\n";
 //
 //        lstr_splt = wxSplit(lStr, ' ');
 //        strlen = lstr_splt.Count();
@@ -46,10 +62,24 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
 //        }
 //        for (tok_idx = 0; tok_idx < strlen; tok_idx++) {
 //            wrkstr = lstr_splt.Item(tok_idx);
+        line_idx++;
 //
     }
     file.Close();
     num_of_lines = (int) all_inv_lines->GetCount();
+
+}
+
+void InventoryDocument::FindStockItems() {
+//    for (int i = 0; i < num_of_lines; i ++) {
+//        lStr.Printf("%s\n", all_inv_lines->inv_line((size_t) i));
+//        (*MainEditBox) << lStr;
+
+//            line_idx = stockItem->SetFirst(i);
+
+//            i = (int) line_idx;
+
+//    }
 
 }
 
@@ -125,3 +155,4 @@ bool InventoryDocument::is_not_used(wxString wrk_str) {
     }
     return FALSE;
 }
+

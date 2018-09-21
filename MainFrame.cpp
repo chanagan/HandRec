@@ -5,7 +5,7 @@
 #include <wx/arrstr.h>
 #include "MainFrame.h"
 #include "InventoryDocument.h"
-#include "InvStockItem.h"
+//#include "InvStockItem.h"
 
 MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
         : wxFrame((wxFrame *) NULL, -1, title, pos, size) {
@@ -44,7 +44,7 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
     InventoryDocument *inventory = new InventoryDocument();
     wxString lStr;
     int number_lines;
-    InvStockItem * stockItem;
+//    InvStockItem * stockItem;
 
     wxFileDialog *OpenDialog = new wxFileDialog(
             this, _("Choose a file to open"), wxEmptyString, wxEmptyString,
@@ -75,14 +75,14 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         lStr.Printf(wxT("Number of lines: %d\n\n"), num_lines);
         (*MainEditBox) << lStr;
 
-        stockItem = new InvStockItem(inventory);
+//        stockItem = new InvStockItem(inventory);
         for (int i = 0; i < num_lines; i ++) {
             lStr.Printf("%s\n", inventory->inv_line((size_t) i));
             (*MainEditBox) << lStr;
 
-            line_idx = stockItem->SetFirst(i);
+//            line_idx = stockItem->SetFirst(i);
 
-            i = (int) line_idx;
+//            i = (int) line_idx;
 
         }
 // TODO invdoc => list of stock_items - not stock_items list of matnr indexes

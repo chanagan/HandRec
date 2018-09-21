@@ -12,8 +12,9 @@ WX_DEFINE_OBJARRAY(ArrayOfMatnr);
 
 
 
-InvStockItem::InvStockItem(InventoryDocument *inv_lines) {
-    inventory = inv_lines;
+InvStockItem::InvStockItem(wxString in_nsn, size_t lin_idx) {
+    nsn = in_nsn;
+    nsn_idx = lin_idx;
 
 }
 
@@ -56,7 +57,7 @@ size_t InvStockItem::SetFirst(size_t line_idx) {
             size_t this_item = wrk_idx;
             list.Add(&this_item);
 
-            niin = string_idx;
+            nsn = string_idx;
         }
         if (string_idx == "(QTY)") {
             quantity = string_idx;
@@ -73,4 +74,9 @@ size_t InvStockItem::SetFirst(size_t line_idx) {
 
 
     return --wrk_idx;
+}
+
+void InvStockItem::SetNSN(wxString input) {
+    nsn = input;
+
 }
