@@ -16,9 +16,10 @@ InvStockItem::InvStockItem(wxString in_nsn, size_t lin_idx) {
     nsn = in_nsn;
     nsn_idx = lin_idx;
 
+    hasSerNums = false;
 }
 
-size_t InvStockItem::SetFirst(size_t line_idx) {
+size_t InvStockItem::SetItem(size_t line_idx) {
 
     wxArrayString line_parts;
     wxString string_idx, temp_string;
@@ -76,7 +77,10 @@ size_t InvStockItem::SetFirst(size_t line_idx) {
     return --wrk_idx;
 }
 
-void InvStockItem::SetNSN(wxString input) {
-    nsn = input;
+wxString InvStockItem::getString() {
+    wxString tmpString;
+//    tmpString.Printf("%d: %s\n", nsn_idx, nsn.mb_str());
+    tmpString.Printf(wxT("%d: %s"), (int) nsn_idx, nsn);
 
+    return tmpString;
 }

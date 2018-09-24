@@ -21,9 +21,6 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
     file.Open();
     wxString lStr;
     all_inv_lines = new wxArrayString;
-//    size_t fileNums;
-//    fileNums = file.GetLineCount();
-
     num_of_lines = file.GetLineCount();
 
 
@@ -47,44 +44,25 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
             // this is the National Stock Number (NSN) and
             // each inventory item has a unique one of these
             invStockItem = new InvStockItem(line_fields[1], line_idx);
-            list.Add(invStockItem);
-
-//            size_t this_item = wrk_idx;
-//            list.Add(&this_item);
-
-//            invStockItem-> nsn = string_idx;
-// TODO add the array for storing the stock items
+            nsn_list.Add(invStockItem);
         }
 
         all_inv_lines->Add(lStr);
-        //        (*MainEditBox) << lStr << "\n";
-//
-//        lstr_splt = wxSplit(lStr, ' ');
-//        strlen = lstr_splt.Count();
-//
-//        if (lstr_splt.Item(0).Cmp("FE:")) {
-//            continue;
-//        }
-//        for (tok_idx = 0; tok_idx < strlen; tok_idx++) {
-//            wrkstr = lstr_splt.Item(tok_idx);
         line_idx++;
-//
+
     }
     file.Close();
     num_of_lines = (int) all_inv_lines->GetCount();
 
 }
+void InventoryDocument::LoadStockItem(size_t) {
 
-void InventoryDocument::FindStockItems() {
-//    for (int i = 0; i < num_of_lines; i ++) {
-//        lStr.Printf("%s\n", all_inv_lines->inv_line((size_t) i));
-//        (*MainEditBox) << lStr;
+}
 
-//            line_idx = stockItem->SetFirst(i);
-
-//            i = (int) line_idx;
-
-//    }
+InvStockItem *InventoryDocument::nsn_item(size_t which_item) {
+    InvStockItem *tmp_nsn_item;
+    tmp_nsn_item = &nsn_list.Item(which_item);
+    return tmp_nsn_item;
 
 }
 
@@ -160,4 +138,6 @@ bool InventoryDocument::is_not_used(wxString wrk_str) {
     }
     return FALSE;
 }
+
+
 

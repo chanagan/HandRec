@@ -42,6 +42,7 @@ void MainFrame::NewFile(wxCommandEvent & WXUNUSED(event)) {
 
 void MainFrame::OpenFile(wxCommandEvent &event) {
     InventoryDocument *inventory = new InventoryDocument();
+    InvStockItem* tmp_nsn_item;
     wxString lStr;
     int number_lines;
 //    InvStockItem * stockItem;
@@ -61,12 +62,14 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         size_t strlen;
         size_t line_idx;
         int num_lines;
+        int num_nsn;
 
         CurrentDocPath = OpenDialog->GetPath();
         SetTitle(wxString("Edit - ") << OpenDialog->GetFilename());
 
         inventory->LoadInventory(CurrentDocPath);
         num_lines = (int) inventory->line_count();
+        num_nsn = (int) inventory->nsn_count();
 
         lStr.Printf(wxT("Document Number: %s\n"), inventory->inv_doc_num());
         (*MainEditBox) << lStr;
@@ -74,16 +77,24 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         (*MainEditBox) << lStr;
         lStr.Printf(wxT("Number of lines: %d\n\n"), num_lines);
         (*MainEditBox) << lStr;
+        lStr.Printf(wxT("Number of NSN Items: %d\n\n"), num_nsn);
+        (*MainEditBox) << lStr;
 
 //        stockItem = new InvStockItem(inventory);
         for (int i = 0; i < num_lines; i ++) {
             lStr.Printf("%s\n", inventory->inv_line((size_t) i));
             (*MainEditBox) << lStr;
 
-//            line_idx = stockItem->SetFirst(i);
+//            line_idx = stockItem->SetItem(i);
 
 //            i = (int) line_idx;
 
+        }
+        for (int i = 0; i < num_nsn; i++) {
+            tmp_nsn_item = inventory->nsn_item((size_t) i);
+            lStr.Printf(wxT("%d: %s\n"), i, tmp_nsn_item->getString());
+//            lStr.format("%d: %s\n", i, tmp_nsn_item->getString());
+            (*MainEditBox) << lStr;
         }
 // TODO invdoc => list of stock_items - not stock_items list of matnr indexes
 //        wxTextFile file(CurrentDocPath);
