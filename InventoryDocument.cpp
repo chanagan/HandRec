@@ -4,19 +4,23 @@
 #include <wx/textfile.h>
 #include <wx/arrstr.h>
 
-#include "Inventory.h"
+#include "InventoryDocument.h"
+#include "InvStockItem.h"
 
-void Inventory::LoadInventory(wxString curr_path) {
+#include <wx/arrimpl.cpp>
+WX_DEFINE_OBJARRAY(ArrayOfMatnr);
+
+void InventoryDocument::LoadInventory(wxString curr_path) {
     CurrentDocPath = curr_path;
+    size_t line_idx = 0;
+
+    InvStockItem *invStockItem;
 
     wxTextFile file(CurrentDocPath);
     wxArrayString line_fields;
     file.Open();
     wxString lStr;
     all_inv_lines = new wxArrayString;
-//    size_t fileNums;
-//    fileNums = file.GetLineCount();
-
     num_of_lines = file.GetLineCount();
 
 
@@ -26,6 +30,7 @@ void Inventory::LoadInventory(wxString curr_path) {
             continue;
         }
 
+        // these are per document data
         line_fields = wxSplit(lStr, ' ');
         if (line_fields[0] == "(CurrentDate)") {
             inv_date = line_fields[1];
@@ -35,25 +40,33 @@ void Inventory::LoadInventory(wxString curr_path) {
             inv_num = line_fields[3];
             continue;
         }
+        if (line_fields[0] == "(MATNR)") {
+            // this is the National Stock Number (NSN) and
+            // each inventory item has a unique one of these
+            invStockItem = new InvStockItem(line_fields[1], line_idx);
+            nsn_list.Add(invStockItem);
+        }
+
         all_inv_lines->Add(lStr);
-//        (*MainEditBox) << lStr << "\n";
-//
-//        lstr_splt = wxSplit(lStr, ' ');
-//        strlen = lstr_splt.Count();
-//
-//        if (lstr_splt.Item(0).Cmp("FE:")) {
-//            continue;
-//        }
-//        for (tok_idx = 0; tok_idx < strlen; tok_idx++) {
-//            wrkstr = lstr_splt.Item(tok_idx);
-//
+        line_idx++;
+
     }
     file.Close();
     num_of_lines = (int) all_inv_lines->GetCount();
 
 }
+void InventoryDocument::LoadStockItem(size_t) {
 
-bool Inventory::is_not_used(wxString wrk_str) {
+}
+
+InvStockItem *InventoryDocument::nsn_item(size_t which_item) {
+    InvStockItem *tmp_nsn_item;
+    tmp_nsn_item = &nsn_list.Item(which_item);
+    return tmp_nsn_item;
+
+}
+
+bool InventoryDocument::is_not_used(wxString wrk_str) {
     if (wrk_str.IsEmpty()) {
         return TRUE;
     }
@@ -125,3 +138,6 @@ bool Inventory::is_not_used(wxString wrk_str) {
     }
     return FALSE;
 }
+
+
+
