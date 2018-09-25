@@ -10,9 +10,58 @@
 
 
 class InvStockItem {
-    size_t nsn_idx;     // index of this nsn in the document
+    size_t nsn_idx;
+public:
+    size_t getNsn_idx() const {
+        return nsn_idx;
+    }
+
+private:
+    // index of this nsn in the document
     bool hasSerNums;
     wxString line_in;
+public:
+    bool isHasSerNums() const {
+        return hasSerNums;
+    }
+
+    void setHasSerNums(bool hasSerNums) {
+        InvStockItem::hasSerNums = hasSerNums;
+    }
+
+    const wxString &getLin() const {
+        return lin;
+    }
+
+    void setLin(const wxString &lin) {
+        InvStockItem::lin = lin;
+    }
+
+    const wxString &getMpo() const {
+        return mpo;
+    }
+
+    void setMpo(const wxString &mpo) {
+        InvStockItem::mpo = mpo;
+    }
+
+    const wxString &getNomen() const {
+        return nomen;
+    }
+
+    void setNomen(const wxString &nomen) {
+        InvStockItem::nomen = nomen;
+    }
+
+    const wxString &getQuantity() const {
+        return quantity;
+    }
+
+    void setQuantity(const wxString &quantity) {
+        InvStockItem::quantity = quantity;
+    }
+
+private:
     wxString lin;
     wxString mpo;
     wxString nomen;

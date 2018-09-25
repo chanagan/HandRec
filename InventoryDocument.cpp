@@ -12,17 +12,31 @@ WX_DEFINE_OBJARRAY(ArrayOfMatnr);
 
 void InventoryDocument::LoadInventory(wxString curr_path) {
     CurrentDocPath = curr_path;
+
+    // load the inventory document
+    LoadInventoryDocument();
+
+
+    // process the inventory items from the document
+    LoadInventoryStock();
+
+
+}
+
+void InventoryDocument::LoadStockItem(size_t) {
+
+}
+
+void InventoryDocument::LoadInventoryDocument() {
     size_t line_idx = 0;
-
+    wxString lStr;
     InvStockItem *invStockItem;
-
     wxTextFile file(CurrentDocPath);
     wxArrayString line_fields;
+
     file.Open();
-    wxString lStr;
     all_inv_lines = new wxArrayString;
     num_of_lines = file.GetLineCount();
-
 
     for (lStr = file.GetFirstLine(); !file.Eof(); lStr = file.GetNextLine()) {
         // if this a document filler line, ignore it
@@ -53,10 +67,49 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
     }
     file.Close();
     num_of_lines = (int) all_inv_lines->GetCount();
-
 }
-void InventoryDocument::LoadStockItem(size_t) {
 
+void InventoryDocument::LoadInventoryStock() {
+    size_t nsn_count = nsn_list.Count();
+    int jj;
+    InvStockItem *tmp_stock_item;
+    wxString tmp_line;
+    wxArrayString line_fields;
+
+    // loop through all the stock items (NSNs)
+    for (int i = 0; i < nsn_count; i++) {
+        size_t lines_idx;
+        tmp_stock_item = &nsn_list.Item((size_t) i);
+        lines_idx = tmp_stock_item->getNsn_idx();
+        tmp_line = all_inv_lines->Item(lines_idx);
+
+        // first, back up until hit (LIN)
+
+        lines_idx--;
+        tmp_line = all_inv_lines->Item(lines_idx);
+        line_fields = wxSplit(tmp_line, ' ');
+
+        if (line_fields[0] == "(QTY)"){
+            tmp_stock_item->setQuantity(line_fields[1]);
+            lines_idx--;
+            tmp_line = all_inv_lines->Item(lines_idx);
+            line_fields = wxSplit(tmp_line, ' ');
+        }
+
+        if (line_fields[0] == "(NOM)"){
+            tmp_stock_item->setNomen(tmp_line.substr(6));
+            lines_idx--;
+            tmp_line = all_inv_lines->Item(lines_idx);
+            line_fields = wxSplit(tmp_line, ' ');
+        }
+
+        lines_idx--;
+        tmp_line = all_inv_lines->Item(lines_idx);
+
+
+        jj++;
+    }
+    jj++;
 }
 
 InvStockItem *InventoryDocument::nsn_item(size_t which_item) {
@@ -138,6 +191,7 @@ bool InventoryDocument::is_not_used(wxString wrk_str) {
     }
     return FALSE;
 }
+
 
 
 
