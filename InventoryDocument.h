@@ -21,6 +21,9 @@ class InventoryDocument {
     wxArrayString *all_inv_lines;
 
     ArrayOfMatnr nsn_list;
+    void LoadInventoryDocument();
+    void LoadInventoryStock();
+
     void LoadStockItem(size_t item_num);
 
 public:

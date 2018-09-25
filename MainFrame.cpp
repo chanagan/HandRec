@@ -67,7 +67,10 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         CurrentDocPath = OpenDialog->GetPath();
         SetTitle(wxString("Edit - ") << OpenDialog->GetFilename());
 
+        // load the inventory document
         inventory->LoadInventory(CurrentDocPath);
+
+
         num_lines = (int) inventory->line_count();
         num_nsn = (int) inventory->nsn_count();
 
