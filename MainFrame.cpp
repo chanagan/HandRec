@@ -42,7 +42,7 @@ void MainFrame::NewFile(wxCommandEvent & WXUNUSED(event)) {
 
 void MainFrame::OpenFile(wxCommandEvent &event) {
     InventoryDocument *inventory = new InventoryDocument();
-    InvStockItem* tmp_nsn_item;
+    InvStockItem *tmp_nsn_item;
     wxString lStr;
     int number_lines;
 //    InvStockItem * stockItem;
@@ -83,16 +83,17 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         lStr.Printf(wxT("Number of NSN Items: %d\n\n"), num_nsn);
         (*MainEditBox) << lStr;
 
-//        stockItem = new InvStockItem(inventory);
-        for (int i = 0; i < num_lines; i ++) {
-            lStr.Printf("%s\n", inventory->inv_line((size_t) i));
-            (*MainEditBox) << lStr;
 
-//            line_idx = stockItem->SetItem(i);
-
-//            i = (int) line_idx;
+        // display each line
+        if (false) {
+            for (int i = 0; i < num_lines; i++) {
+                lStr.Printf("%s\n", inventory->inv_line((size_t) i));
+                (*MainEditBox) << lStr;
+            }
 
         }
+
+        // display each nsn item
         for (int i = 0; i < num_nsn; i++) {
             tmp_nsn_item = inventory->nsn_item((size_t) i);
             lStr.Printf(wxT("%d: %s\n"), i, tmp_nsn_item->getString());
