@@ -72,6 +72,7 @@ void InventoryDocument::LoadInventoryStock() {
   bool item_done;
   size_t nsn_count = nsn_list.Count();
   int jj;
+    int last_itm_hi_line = 0;
   InvStockItem *tmp_stock_item;
   wxString tmp_line;
   wxArrayString line_fields;
@@ -80,7 +81,6 @@ void InventoryDocument::LoadInventoryStock() {
   for (int i = 0; i < nsn_count; i++) {
     int fld_count = 1;
     int fld_count_req = 5;
-    int last_itm_hi_line = 0;
     size_t lines_idx;
     tmp_stock_item = &nsn_list.Item((size_t) i);
     lines_idx = tmp_stock_item->getNsn_idx();
@@ -163,6 +163,12 @@ void InventoryDocument::LoadInventoryStock() {
         if (line_fields[0]=="(MPO)") {
           tmp_stock_item->setMpo(line_fields[1]);
           fld_count++;
+          continue;
+        }
+        if (line_fields[0]=="(LIN)") {
+          tmp_stock_item->setLin(line_fields[1]);
+          fld_count++;
+//          item_done = true;
           continue;
         }
       } while (fld_count < fld_count_req);
