@@ -126,6 +126,11 @@ void InventoryDocument::LoadInventoryStock() {
         fld_count++;
         continue;
       }
+//      if (line_fields[0]=="Serial") {
+//        tmp_stock_item->setHasSerNums(true);
+//        fld_count++;
+//        continue;
+//      }
     } while (!item_done);
 
     lines_idx = tmp_stock_item->getNsn_idx();
@@ -173,31 +178,9 @@ void InventoryDocument::LoadInventoryStock() {
         }
       } while (fld_count < fld_count_req);
     }
-    last_itm_hi_line = lines_idx;
+    last_itm_hi_line = (int) lines_idx;
     lines_idx = tmp_stock_item->getNsn_idx();
 
-//    lines_idx--;
-//    tmp_line = all_inv_lines->Item(lines_idx);
-//    line_fields = wxSplit(tmp_line, ' ');
-//
-//    if (line_fields[0]=="(QTY)") {
-//      tmp_stock_item->setQuantity(line_fields[1]);
-//      lines_idx--;
-//      tmp_line = all_inv_lines->Item(lines_idx);
-//      line_fields = wxSplit(tmp_line, ' ');
-//    }
-//
-//    if (line_fields[0]=="(NOM)") {
-//      tmp_stock_item->setNomen(tmp_line.substr(6));
-//      lines_idx--;
-//      tmp_line = all_inv_lines->Item(lines_idx);
-//      line_fields = wxSplit(tmp_line, ' ');
-//    }
-//
-//    lines_idx--;
-//    tmp_line = all_inv_lines->Item(lines_idx);
-//
-//    jj++;
   }
   jj++;
 }
@@ -213,9 +196,9 @@ bool InventoryDocument::is_not_used(wxString wrk_str) {
   if (wrk_str.IsEmpty()) {
     return TRUE;
   }
-  if (wrk_str.Find("FE")!=wxNOT_FOUND) {
-    return TRUE;
-  }
+//  if (wrk_str.Find("FE:")!=wxNOT_FOUND) {
+//    return TRUE;
+//  }
   if (wrk_str.Find("(CHARG)")!=wxNOT_FOUND) {
     return TRUE;
   }
@@ -256,6 +239,9 @@ bool InventoryDocument::is_not_used(wxString wrk_str) {
     return TRUE;
   }
   if (wrk_str.StartsWith("Inv Doc")) {
+    return TRUE;
+  }
+  if (wrk_str.StartsWith("FE:") || wrk_str.StartsWith("(FE:")) {
     return TRUE;
   }
   if (wrk_str.StartsWith("Date ")) {
