@@ -20,6 +20,9 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
   // process the inventory items from the document
   LoadInventoryStock();
 
+  // find the items with serial numbers
+  LoadInventorySerials();
+
 }
 
 void InventoryDocument::LoadStockItem(size_t) {
@@ -71,8 +74,8 @@ void InventoryDocument::LoadInventoryDocument() {
 void InventoryDocument::LoadInventoryStock() {
   bool item_done;
   size_t nsn_count = nsn_list.Count();
-  int jj;
-    int last_itm_hi_line = 0;
+//  int jj;
+  int last_itm_hi_line = 0;
   InvStockItem *tmp_stock_item;
   wxString tmp_line;
   wxArrayString line_fields;
@@ -107,7 +110,7 @@ void InventoryDocument::LoadInventoryStock() {
         item_done = true;
         continue;
       }
-      if (lines_idx == last_itm_hi_line) {
+      if (lines_idx==last_itm_hi_line) {
         item_done = true;
         continue;
       }
@@ -126,11 +129,6 @@ void InventoryDocument::LoadInventoryStock() {
         fld_count++;
         continue;
       }
-//      if (line_fields[0]=="Serial") {
-//        tmp_stock_item->setHasSerNums(true);
-//        fld_count++;
-//        continue;
-//      }
     } while (!item_done);
 
     lines_idx = tmp_stock_item->getNsn_idx();
@@ -140,7 +138,7 @@ void InventoryDocument::LoadInventoryStock() {
     if (fld_count < fld_count_req) {
       do {
         lines_idx++;
-        // first, don't go back beyond first line
+        // first, don't go beyond the last line
         if (lines_idx > num_of_lines) {
           item_done = true;
           break;
@@ -148,13 +146,6 @@ void InventoryDocument::LoadInventoryStock() {
         // split the fields out to get the key field
         tmp_line = all_inv_lines->Item(lines_idx);
         line_fields = wxSplit(tmp_line, ' ');
-//                // if we backed up to this, we're near the beginning
-//                if (line_fields[0] == "(LIN)") {
-//                    tmp_stock_item->setLin(line_fields[1]);
-//                    fld_count++;
-//                    item_done = true;
-//                    continue;
-//                }
         if (line_fields[0]=="(QTY)") {
           tmp_stock_item->setQuantity(line_fields[1]);
           fld_count++;
@@ -181,6 +172,34 @@ void InventoryDocument::LoadInventoryStock() {
     last_itm_hi_line = (int) lines_idx;
     lines_idx = tmp_stock_item->getNsn_idx();
 
+  }
+//  jj++;
+}
+
+void InventoryDocument::LoadInventorySerials() {
+  bool item_done;
+  size_t nsn_count = nsn_list.Count();
+  int jj = 0;
+  int last_itm_hi_line = 0;
+  InvStockItem *tmp_stock_item;
+  wxString tmp_line;
+  wxArrayString line_fields;
+
+  // loop through all the stock items (NSNs)
+  for (int i = 0; i < (int) num_of_lines; i++) {
+    int fld_count = 1;
+    int fld_count_req = 5;
+    size_t lines_idx;
+//    tmp_stock_item = &nsn_list.Item((size_t) i);
+//    lines_idx = tmp_stock_item->getNsn_idx();
+    tmp_line = all_inv_lines->Item(i);
+    line_fields = wxSplit(tmp_line, ' ');
+    if (line_fields[0]=="Serial") {
+//      tmp_stock_item->setHasSerNums(true);
+//        fld_count++;
+        jj++;
+      continue;
+    }
   }
   jj++;
 }

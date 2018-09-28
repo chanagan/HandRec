@@ -23,6 +23,7 @@ class InventoryDocument {
     ArrayOfMatnr nsn_list;
     void LoadInventoryDocument();
     void LoadInventoryStock();
+    void LoadInventorySerials();
 
     void LoadStockItem(size_t item_num);
 
