@@ -195,6 +195,15 @@ void InventoryDocument::LoadInventorySerials() {
     tmp_line = all_inv_lines->Item(i);
     line_fields = wxSplit(tmp_line, ' ');
     if (line_fields[0]=="Serial") {
+        int serial_line_loc;
+        // todo process lines for this serial number
+        // store this line location
+        serial_line_loc = i;
+        // move to MATNR and store line location
+        // go find the InvStockItem for this MATNR
+        // set its data flag
+        // back to serial location
+        // move to DATA location(s)
 //      tmp_stock_item->setHasSerNums(true);
 //        fld_count++;
         jj++;
