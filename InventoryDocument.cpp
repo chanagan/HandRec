@@ -189,6 +189,7 @@ void InventoryDocument::LoadInventorySerials() {
   for (int i = 0; i < (int) num_of_lines; i++) {
     int fld_count = 1;
     int fld_count_req = 5;
+    size_t tmp_stock_itm_idx;
     size_t lines_idx;
 //    tmp_stock_item = &nsn_list.Item((size_t) i);
 //    lines_idx = tmp_stock_item->getNsn_idx();
@@ -200,6 +201,19 @@ void InventoryDocument::LoadInventorySerials() {
       // store this line location
       serial_line_loc = i;
       // move to MATNR and store line location
+      tmp_stock_itm_idx = 0;
+      do {
+        i++;
+        tmp_line = all_inv_lines->Item(i);
+        line_fields = wxSplit(tmp_line, ' ');
+        if (line_fields[0] == "(MATNR)") {
+          tmp_stock_itm_idx = FindStockItem((size_t) i);
+          nsn_list.Item(tmp_stock_itm_idx).setHasSerNums(true);
+        }
+
+      } while (tmp_stock_itm_idx == 0);
+
+      i = serial_line_loc;
       // go find the InvStockItem for this MATNR
       // set its data flag
       // back to serial location
@@ -213,7 +227,7 @@ void InventoryDocument::LoadInventorySerials() {
   jj++;
 }
 
-InvStockItem* InventoryDocument::FindStockItem(size_t line_num) {
+size_t InventoryDocument::FindStockItem(size_t line_num) {
   // find the stock item whose NSN is on <line_num> line
   InvStockItem* tmp_stock_item;
   int nsn_itm;
@@ -221,10 +235,10 @@ InvStockItem* InventoryDocument::FindStockItem(size_t line_num) {
   for (int i = 0; i < nsn_list.Count(); i++) {
     tmp_stock_item = &nsn_list.Item((size_t) i);
     if (tmp_stock_item->getNsn_idx() == line_num) {
-      return  tmp_stock_item;
+      return  (size_t) i;
     }
   }
-  return nullptr;
+  return 0;
 }
 
 InvStockItem *InventoryDocument::nsn_item(size_t which_item) {

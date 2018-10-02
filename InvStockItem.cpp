@@ -81,8 +81,8 @@ wxString InvStockItem::getString() {
     wxString tmpString;
 //    tmpString.Printf("%d: %s\n", nsn_idx, nsn.mb_str());
 //    tmpString.Printf(wxT("%d: %s"), (int) nsn_idx, nsn);
-    tmpString.Printf(wxT("%d: lin: %s - mpo: %s - nsn: %s - qty: %s - nomen: %s"),
-            (int) nsn_idx, lin, mpo, nsn, quantity, nomen);
+    tmpString.Printf(wxT("%d: lin: %s - mpo: %s - nsn: %s - qty: %s - dta: %d - nomen: %s"),
+            (int) nsn_idx, lin, mpo, nsn, quantity, hasSerNums, nomen);
 
     return tmpString;
 }
