@@ -27,6 +27,8 @@ class InventoryDocument {
 
     void LoadStockItem(size_t item_num);
 
+    InvStockItem*  FindStockItem(size_t line_num);
+
 public:
     void LoadInventory(wxString curr_path);
 

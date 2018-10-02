@@ -195,22 +195,36 @@ void InventoryDocument::LoadInventorySerials() {
     tmp_line = all_inv_lines->Item(i);
     line_fields = wxSplit(tmp_line, ' ');
     if (line_fields[0]=="Serial") {
-        int serial_line_loc;
-        // todo process lines for this serial number
-        // store this line location
-        serial_line_loc = i;
-        // move to MATNR and store line location
-        // go find the InvStockItem for this MATNR
-        // set its data flag
-        // back to serial location
-        // move to DATA location(s)
+      int serial_line_loc;
+      // todo process lines for this serial number
+      // store this line location
+      serial_line_loc = i;
+      // move to MATNR and store line location
+      // go find the InvStockItem for this MATNR
+      // set its data flag
+      // back to serial location
+      // move to DATA location(s)
 //      tmp_stock_item->setHasSerNums(true);
 //        fld_count++;
-        jj++;
+      jj++;
       continue;
     }
   }
   jj++;
+}
+
+InvStockItem* InventoryDocument::FindStockItem(size_t line_num) {
+  // find the stock item whose NSN is on <line_num> line
+  InvStockItem* tmp_stock_item;
+  int nsn_itm;
+
+  for (int i = 0; i < nsn_list.Count(); i++) {
+    tmp_stock_item = &nsn_list.Item((size_t) i);
+    if (tmp_stock_item->getNsn_idx() == line_num) {
+      return  tmp_stock_item;
+    }
+  }
+  return nullptr;
 }
 
 InvStockItem *InventoryDocument::nsn_item(size_t which_item) {
