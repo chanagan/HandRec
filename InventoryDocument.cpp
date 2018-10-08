@@ -195,8 +195,12 @@ void InventoryDocument::LoadInventorySerials() {
 //    lines_idx = tmp_stock_item->getNsn_idx();
     tmp_line = all_inv_lines->Item(i);
     line_fields = wxSplit(tmp_line, ' ');
+
+    // look for the "Serial / Equpment" line
+    // - it will have one or more (DATA) lines sometime after, with serial numbers
     if (line_fields[0]=="Serial") {
       int serial_line_loc;
+
       // todo process lines for this serial number
       // store this line location
       serial_line_loc = i;
@@ -204,16 +208,37 @@ void InventoryDocument::LoadInventorySerials() {
       tmp_stock_itm_idx = 0;
       do {
         i++;
-        tmp_line = all_inv_lines->Item(i);
+        tmp_line = all_inv_lines->Item((size_t) i);
         line_fields = wxSplit(tmp_line, ' ');
-        if (line_fields[0] == "(MATNR)") {
+        if (line_fields[0]=="(MATNR)") {
           tmp_stock_itm_idx = FindStockItem((size_t) i);
-          nsn_list.Item(tmp_stock_itm_idx).setHasSerNums(true);
+          tmp_stock_item = &nsn_list.Item(tmp_stock_itm_idx);
+          tmp_stock_item->setHasSerNums(true);
+        }
+      } while (tmp_stock_itm_idx==0);
+
+      // at this point, we have the stock item for this set of serial numbers
+
+      // so go back to the "Serial . . " line
+      i = serial_line_loc;
+      // we're here because this stock item has serial numbers
+      // the line(s) start with (DATA) and have one or more ';' separated items
+
+      wxString tmp_string;
+      bool done = false;
+      do {
+        i++;
+        tmp_line = all_inv_lines->Item((size_t) i);
+        tmp_string = tmp_line.substr(0, 6);
+        if (tmp_string == "(DATA)") {
+          tmp_string = tmp_line.substr(7);
+          line_fields = wxSplit(tmp_string, ';');
+
+          done = true;
         }
 
-      } while (tmp_stock_itm_idx == 0);
+      } while (! done);
 
-      i = serial_line_loc;
       // go find the InvStockItem for this MATNR
       // set its data flag
       // back to serial location
@@ -222,20 +247,20 @@ void InventoryDocument::LoadInventorySerials() {
 //        fld_count++;
       jj++;
       continue;
-    }
+    } // if (line_fields[0]=="Serial") {
   }
   jj++;
 }
 
 size_t InventoryDocument::FindStockItem(size_t line_num) {
   // find the stock item whose NSN is on <line_num> line
-  InvStockItem* tmp_stock_item;
+  InvStockItem *tmp_stock_item;
   int nsn_itm;
 
   for (int i = 0; i < nsn_list.Count(); i++) {
     tmp_stock_item = &nsn_list.Item((size_t) i);
-    if (tmp_stock_item->getNsn_idx() == line_num) {
-      return  (size_t) i;
+    if (tmp_stock_item->getNsn_idx()==line_num) {
+      return (size_t) i;
     }
   }
   return 0;

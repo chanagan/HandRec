@@ -8,75 +8,84 @@
 #include <wx/wx.h>
 #include "InventoryDocument.h"
 
-
 class InvStockItem {
-    size_t nsn_idx;
-public:
-    size_t getNsn_idx() const {
-        return nsn_idx;
-    }
+  size_t nsn_idx;
+ public:
+  size_t getNsn_idx() const {
+    return nsn_idx;
+  }
 
-private:
-    // index of this nsn in the document
-    bool hasSerNums;
-    wxString line_in;
-public:
-    bool isHasSerNums() const {
-        return hasSerNums;
-    }
+ private:
+  // index of this nsn in the document
+  bool hasSerNums;
+  int data_first_line;
+  int data_line_count;
 
-    void setHasSerNums(bool hasSerNums) {
-        InvStockItem::hasSerNums = hasSerNums;
-    }
+  wxString lin_;
+  wxString mpo;
+  wxString nomen;
+  wxString quantity;
+  wxString nsn;
 
-    const wxString &getLin() const {
-        return lin;
-    }
+ public:
+  bool isHasSerNums() const {
+    return hasSerNums;
+  }
 
-    void setLin(const wxString &lin) {
-        InvStockItem::lin = lin;
-    }
+  void setHasSerNums(bool hasSerNums) {
+    InvStockItem::hasSerNums = hasSerNums;
+  }
 
-    const wxString &getMpo() const {
-        return mpo;
-    }
+  int getData_first_line() const {
+    return data_first_line;
+  }
+  void setData_first_line(int data_first_line) {
+    InvStockItem::data_first_line = data_first_line;
+  }
+  int getData_line_count() const {
+    return data_line_count;
+  }
+  void setData_line_count(int data_line_count) {
+    InvStockItem::data_line_count = data_line_count;
+  }
 
-    void setMpo(const wxString &mpo) {
-        InvStockItem::mpo = mpo;
-    }
+  const wxString &getLin() const {
+    return lin_;
+  }
 
-    const wxString &getNomen() const {
-        return nomen;
-    }
+  void setLin(const wxString &lin) {
+    InvStockItem::lin_ = lin;
+  }
 
-    void setNomen(const wxString &nomen) {
-        InvStockItem::nomen = nomen;
-    }
+  const wxString &getMpo() const {
+    return mpo;
+  }
 
-    const wxString &getQuantity() const {
-        return quantity;
-    }
+  void setMpo(const wxString &mpo) {
+    InvStockItem::mpo = mpo;
+  }
 
-    void setQuantity(const wxString &quantity) {
-        InvStockItem::quantity = quantity;
-    }
+  const wxString &getNomen() const {
+    return nomen;
+  }
 
-private:
-    wxString lin;
-    wxString mpo;
-    wxString nomen;
-    wxString quantity;
-    wxString nsn;
+  void setNomen(const wxString &nomen) {
+    InvStockItem::nomen = nomen;
+  }
 
-public:
+  const wxString &getQuantity() const {
+    return quantity;
+  }
 
-    InvStockItem(wxString nsn_in, size_t lin_idx);
+  void setQuantity(const wxString &quantity) {
+    InvStockItem::quantity = quantity;
+  }
 
-    size_t SetItem(size_t);
-    wxString getNsn() { return nsn;};
-    wxString getString();
+  InvStockItem(wxString nsn_in, size_t lin_idx);
+
+  wxString getNsn() { return nsn; };
+  wxString getString();
 
 };
-
 
 #endif //HANDREC_INVSTOCKITEM_H
