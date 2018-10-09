@@ -16,7 +16,6 @@ void InventoryDocument::LoadInventory(wxString curr_path) {
   // load the inventory document
   LoadInventoryDocument();
 
-
   // process the inventory items from the document
   LoadInventoryStock();
 
@@ -209,8 +208,10 @@ void InventoryDocument::LoadInventorySerials() {
         tmp_line = all_inv_lines->Item((size_t) i);
         line_fields = wxSplit(tmp_line, ' ');
         if (line_fields[0]=="(MATNR)") {
+          // we know this is a stock item, we want the stock item object
           tmp_stock_itm_idx = FindStockItem((size_t) i);
           tmp_stock_item = &nsn_list.Item(tmp_stock_itm_idx);
+          // let it know it has Serial Numbers
           tmp_stock_item->setHasSerNums(true);
         }
       } while (tmp_stock_itm_idx==0);
@@ -219,6 +220,7 @@ void InventoryDocument::LoadInventorySerials() {
 
       // so go back to the "Serial . . " line
       i = serial_line_loc;
+
       // we're here because this stock item has serial numbers
       // the line(s) start with (DATA) and have one or more ';' separated items
 
@@ -228,13 +230,13 @@ void InventoryDocument::LoadInventorySerials() {
         i++;
         tmp_line = all_inv_lines->Item((size_t) i);
         tmp_string = tmp_line.substr(0, 6);
-        if (tmp_string == "(DATA)") {
+        if (tmp_string=="(DATA)") {
           int data_line_count = 0;
           // set the first line of DATA for this item
           tmp_stock_item->setData_first_line(i);
           tmp_string = tmp_line.substr(7);
           line_fields = wxSplit(tmp_string, ';');
-          data_line_count ++;
+          data_line_count++;
 
           while (!done) {
             i++;
@@ -243,10 +245,11 @@ void InventoryDocument::LoadInventorySerials() {
             if (tmp_string=="(DATA)") {
               tmp_string = tmp_line.substr(7);
               line_fields = wxSplit(tmp_string, ';');
-              data_line_count ++;
+              data_line_count++;
 
             } else {
               // this line is not part of what we want
+              // so back off this line in case it's part of the next stock item
               i--;
               tmp_stock_item->setData_line_count(data_line_count);
               done = true;
@@ -254,12 +257,12 @@ void InventoryDocument::LoadInventorySerials() {
           }
         }
 
-      } while (! done);
+      } while (!done);
 
       jj++;
       continue;
     } // if (line_fields[0]=="Serial") {
-  }
+  } // for (int i = 0; i < (int) num_of_lines; i++)
   jj++;
 }
 
