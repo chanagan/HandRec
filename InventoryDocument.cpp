@@ -191,8 +191,6 @@ void InventoryDocument::LoadInventorySerials() {
     int fld_count_req = 5;
     size_t tmp_stock_itm_idx;
     size_t lines_idx;
-//    tmp_stock_item = &nsn_list.Item((size_t) i);
-//    lines_idx = tmp_stock_item->getNsn_idx();
     tmp_line = all_inv_lines->Item(i);
     line_fields = wxSplit(tmp_line, ' ');
 
@@ -231,20 +229,33 @@ void InventoryDocument::LoadInventorySerials() {
         tmp_line = all_inv_lines->Item((size_t) i);
         tmp_string = tmp_line.substr(0, 6);
         if (tmp_string == "(DATA)") {
+          int data_line_count = 0;
+          // set the first line of DATA for this item
+          tmp_stock_item->setData_first_line(i);
           tmp_string = tmp_line.substr(7);
           line_fields = wxSplit(tmp_string, ';');
+          data_line_count ++;
 
-          done = true;
+          while (!done) {
+            i++;
+            tmp_line = all_inv_lines->Item((size_t) i);
+            tmp_string = tmp_line.substr(0, 6);
+            if (tmp_string=="(DATA)") {
+              tmp_string = tmp_line.substr(7);
+              line_fields = wxSplit(tmp_string, ';');
+              data_line_count ++;
+
+            } else {
+              // this line is not part of what we want
+              i--;
+              tmp_stock_item->setData_line_count(data_line_count);
+              done = true;
+            }
+          }
         }
 
       } while (! done);
 
-      // go find the InvStockItem for this MATNR
-      // set its data flag
-      // back to serial location
-      // move to DATA location(s)
-//      tmp_stock_item->setHasSerNums(true);
-//        fld_count++;
       jj++;
       continue;
     } // if (line_fields[0]=="Serial") {

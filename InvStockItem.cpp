@@ -17,6 +17,8 @@ InvStockItem::InvStockItem(wxString in_nsn, size_t lin_idx) {
     nsn_idx = lin_idx;
 
     hasSerNums = false;
+    data_first_line = 0;
+    data_line_count = 0;
 }
 
 wxString InvStockItem::getString() {
@@ -24,7 +26,10 @@ wxString InvStockItem::getString() {
 //    tmpString.Printf("%d: %s\n", nsn_idx, nsn.mb_str());
 //    tmpString.Printf(wxT("%d: %s"), (int) nsn_idx, nsn);
     tmpString.Printf(wxT("%d: lin_: %s - mpo: %s - nsn: %s - qty: %s - dta: %d - nomen: %s"),
-            (int) nsn_idx, lin_, mpo, nsn, quantity, hasSerNums, nomen);
+                     (int) nsn_idx, lin_, mpo, nsn, quantity, hasSerNums, nomen);
+    tmpString.Printf(wxT("nsn: %s - qty: %s - dta: %d - nomen: %s - dta line / count %d / %d"),
+                     nsn, quantity, hasSerNums, nomen, data_first_line, data_line_count);
+
 
     return tmpString;
 }
