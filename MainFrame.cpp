@@ -25,10 +25,14 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
 
     MenuFile->AppendSeparator();
   MenuFile->Append(wxID_EXIT, wxT("&Quit"),
-//  MenuFile->Append(MENU_Quit, wxT("&Quit"),
                    wxT("Quit the editor"));
 
   MainMenu->Append(MenuFile, wxT("File"));
+
+  wxMenu *Menu = new wxMenu();
+  Menu->Append(MENU_INV_Open, _("Load"), _("Load a menu file"));
+  MainMenu->Append(Menu, _("Inventory"));
+
   SetMenuBar(MainMenu);
 
   MainEditBox = new wxTextCtrl(this, TEXT_Main, "",
@@ -39,6 +43,7 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
   SetStatusText(_("Here we are"), 1);
 
   Bind(wxEVT_MENU, &MainFrame::Quit, this, wxID_EXIT);
+  Bind(wxEVT_MENU, &MainFrame::OpenFile, this, MENU_INV_Open);
 //    Maximize();
 }
 
