@@ -39,7 +39,8 @@ enum {
     MENU_Open,
     MENU_Save,
     MENU_SaveAs,
-    MENU_Quit
+    MENU_Quit,
+    MENU_INV_Open
 };
 
 

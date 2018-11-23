@@ -7,7 +7,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
                 EVT_MENU(MENU_Quit, MainFrame::CloseFile)
                 EVT_MENU(MENU_Save, MainFrame::SaveFile)
                 EVT_MENU(MENU_SaveAs, MainFrame::SaveFileAs)
-                EVT_MENU(MENU_Quit, MainFrame::Quit)
+//                EVT_MENU(MENU_Quit, MainFrame::Quit)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(MainApp)
