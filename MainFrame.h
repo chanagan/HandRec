@@ -12,6 +12,10 @@ public:
     MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
 
 //    wxButton *HelloWorld;
+
+  wxBoxSizer *sizer;
+  wxGridSizer *gs;
+
     wxTextCtrl *MainEditBox;
     wxMenuBar *MainMenu;
     wxString CurrentDocPath;
