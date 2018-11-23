@@ -8,40 +8,41 @@
 #include <wx/wx.h>
 
 class MainFrame : public wxFrame {
-public:
-    MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
+ public:
+  MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
 
 //    wxButton *HelloWorld;
-    wxTextCtrl *MainEditBox;
-    wxMenuBar *MainMenu;
-    wxString CurrentDocPath;
+  wxBoxSizer *sizer;
+  wxGridSizer *gs;
 
-    void Quit(wxCommandEvent &event);
+  wxTextCtrl *MainEditBox;
+  wxMenuBar *MainMenu;
+  wxString CurrentDocPath;
 
-    void NewFile(wxCommandEvent &event);
+  void Quit(wxCommandEvent &event);
 
-    void OpenFile(wxCommandEvent &event);
+  void NewFile(wxCommandEvent &event);
 
-    void SaveFile(wxCommandEvent &event);
+  void OpenFile(wxCommandEvent &event);
 
-    void SaveFileAs(wxCommandEvent &event);
+  void SaveFile(wxCommandEvent &event);
 
-    void CloseFile(wxCommandEvent &event);
+  void SaveFileAs(wxCommandEvent &event);
+
+  void CloseFile(wxCommandEvent &event);
 
 //    void OnExit(wxCommandEvent &event);
 
-    DECLARE_EVENT_TABLE()
+ DECLARE_EVENT_TABLE()
 };
 
 enum {
-    TEXT_Main = wxID_HIGHEST + 1,
-    MENU_New,
-    MENU_Open,
-    MENU_Save,
-    MENU_SaveAs,
-    MENU_Quit
+  TEXT_Main = wxID_HIGHEST + 1,
+  MENU_New,
+  MENU_Open,
+  MENU_Save,
+  MENU_SaveAs,
+  MENU_Quit
 };
-
-
 
 #endif //FIRST_WX_APP_MAINFRAME_H

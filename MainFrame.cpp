@@ -29,10 +29,24 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     MainMenu->Append(MenuFile, wxT("File"));
     SetMenuBar(MainMenu);
 
+    sizer = new wxBoxSizer(wxHORIZONTAL);
+    gs = new wxGridSizer(4,1,3,3);
+  gs->Add(new wxButton(this, -1, wxT("One")), 0, wxEXPAND);
+  gs->Add(new wxButton(this, -1, wxT("Two")), 0, wxEXPAND);
+  gs->Add(new wxButton(this, -1, wxT("Three")), 0, wxEXPAND);
+  gs->Add(new wxButton(this, -1, wxT("Four")), 0, wxEXPAND);
+
+    sizer->Add(gs, 0, wxEXPAND);
+
+
     MainEditBox = new wxTextCtrl(this, TEXT_Main, "",
                                  wxDefaultPosition, wxDefaultSize,
                                  wxTE_MULTILINE | wxTE_RICH,
                                  wxDefaultValidator, wxTextCtrlNameStr);
+
+    sizer->Add(MainEditBox, 1, wxEXPAND | wxTOP | wxBOTTOM);
+    SetSizer(sizer);
+    SetMinSize(wxSize(270, 220));
 //    Maximize();
 }
 
