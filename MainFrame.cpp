@@ -8,7 +8,8 @@
 //#include "InvStockItem.h"
 
 MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
-    : wxFrame((wxFrame *) NULL, -1, title, pos, size) {
+    : wxFrame((wxFrame *)NULL, -1, title, pos, size)
+{
   MainMenu = new wxMenuBar();
   wxMenu *MenuFile = new wxMenu();
 
@@ -23,7 +24,7 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
   MenuFile->Append(MENU_SaveAs, wxT("Save &As"),
                    wxT("Save the current document under a new file name"));
 
-    MenuFile->AppendSeparator();
+  MenuFile->AppendSeparator();
   MenuFile->Append(wxID_EXIT, wxT("&Quit"),
                    wxT("Quit the editor"));
 
@@ -36,7 +37,7 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
   SetMenuBar(MainMenu);
 
   sizer = new wxBoxSizer(wxHORIZONTAL);
-  gs = new wxGridSizer(4,1,3,3);
+  gs = new wxGridSizer(4, 1, 3, 3);
   gs->Add(new wxButton(this, -1, wxT("One")), 0, wxEXPAND);
   gs->Add(new wxButton(this, -1, wxT("Two")), 0, wxEXPAND);
   gs->Add(new wxButton(this, -1, wxT("Three")), 0, wxEXPAND);
@@ -54,23 +55,25 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
 
   CreateStatusBar(2);
   SetStatusText(_("Here we are"), 1);
+  SetStatusText(_("And there"), 0);
 
   Bind(wxEVT_MENU, &MainFrame::Quit, this, wxID_EXIT);
   Bind(wxEVT_MENU, &MainFrame::OpenFile, this, MENU_INV_Open);
-//    Maximize();
+  //    Maximize();
 }
 
-void MainFrame::NewFile(wxCommandEvent & WXUNUSED(event)) {
-
+void MainFrame::NewFile(wxCommandEvent &WXUNUSED(event))
+{
 }
 
-void MainFrame::OpenFile(wxCommandEvent &event) {
+void MainFrame::OpenFile(wxCommandEvent &event)
+{
   InventoryDocument *inventory = new InventoryDocument();
   InvStockItem *tmp_nsn_item;
   wxString lStr;
   int number_lines;
   bool got_file = false;
-//    InvStockItem * stockItem;
+  //    InvStockItem * stockItem;
   wxArrayString lstr_splt;
   wxString wrkstr;
   size_t strlen;
@@ -86,19 +89,21 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
         "C header files (*.h)|*.h"),
       wxFD_OPEN, wxDefaultPosition);
 
-  if (OpenDialog->ShowModal()==wxID_OK) {
+  if (OpenDialog->ShowModal() == wxID_OK)
+  {
 
     CurrentDocPath = OpenDialog->GetPath();
     SetTitle(wxString("Edit - ") << OpenDialog->GetFilename());
     got_file = true;
   }
-  if (got_file) {
+  if (got_file)
+  {
 
     // load the inventory document
     inventory->LoadInventory(CurrentDocPath);
 
-    num_lines = (int) inventory->line_count();
-    num_nsn = (int) inventory->nsn_count();
+    num_lines = (int)inventory->line_count();
+    num_nsn = (int)inventory->nsn_count();
 
     lStr.Printf(wxT("Document Number: %s\n"), inventory->inv_doc_num());
     SetStatusText(lStr, 0);
@@ -113,39 +118,42 @@ void MainFrame::OpenFile(wxCommandEvent &event) {
     lStr.Printf(wxT("Number of NSN Items: %d\n\n"), num_nsn);
     (*MainEditBox) << lStr;
 
-
     // display each line
-    if (false) {
-      for (int i = 0; i < num_lines; i++) {
-        lStr.Printf("%s\n", inventory->inv_line((size_t) i));
+    if (false)
+    {
+      for (int i = 0; i < num_lines; i++)
+      {
+        lStr.Printf("%s\n", inventory->inv_line((size_t)i));
         (*MainEditBox) << lStr;
       }
-
     }
 
     // display each nsn item
-    for (int i = 0; i < num_nsn; i++) {
-      tmp_nsn_item = inventory->nsn_item((size_t) i);
+    for (int i = 0; i < num_nsn; i++)
+    {
+      tmp_nsn_item = inventory->nsn_item((size_t)i);
       lStr.Printf(wxT("%d: %s\n"), i, tmp_nsn_item->getString());
-//            lStr.format("%d: %s\n", i, tmp_nsn_item->getString());
+      //            lStr.format("%d: %s\n", i, tmp_nsn_item->getString());
       (*MainEditBox) << lStr;
     }
-// TODO invdoc => list of stock_items - not stock_items list of matnr indexes
+    // TODO invdoc => list of stock_items - not stock_items list of matnr indexes
   }
-
 }
 
-void MainFrame::CloseFile(wxCommandEvent &event) {
+void MainFrame::CloseFile(wxCommandEvent &event)
+{
   MainEditBox->Clear();
 }
 
-void MainFrame::SaveFile(wxCommandEvent &event) {
+void MainFrame::SaveFile(wxCommandEvent &event)
+{
 }
 
-void MainFrame::SaveFileAs(wxCommandEvent &event) {
-
+void MainFrame::SaveFileAs(wxCommandEvent &event)
+{
 }
 
-void MainFrame::Quit(wxCommandEvent & WXUNUSED(event)) {
+void MainFrame::Quit(wxCommandEvent &WXUNUSED(event))
+{
   Close(TRUE);
 }
