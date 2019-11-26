@@ -7,6 +7,7 @@
 
 #include <wx/wx.h>
 
+
 class MainFrame : public wxFrame {
 public:
     MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
@@ -34,7 +35,7 @@ public:
 
 //    void OnExit(wxCommandEvent &event);
 
-    DECLARE_EVENT_TABLE()
+//    DECLARE_EVENT_TABLE()
 };
 
 enum {

@@ -10,6 +10,7 @@
 MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
     : wxFrame((wxFrame *)NULL, -1, title, pos, size)
 {
+/*
   MainMenu = new wxMenuBar();
   wxMenu *MenuFile = new wxMenu();
 
@@ -35,13 +36,14 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
   MainMenu->Append(Menu, _("Inventory"));
 
   SetMenuBar(MainMenu);
+*/
 
-  sizer = new wxBoxSizer(wxHORIZONTAL);
-  gs = new wxGridSizer(4, 1, 3, 3);
+  sizer = new wxBoxSizer(wxVERTICAL);
+  gs = new wxGridSizer(1, 4, 3, 3);
   gs->Add(new wxButton(this, -1, wxT("One")), 0, wxEXPAND);
   gs->Add(new wxButton(this, -1, wxT("Two")), 0, wxEXPAND);
   gs->Add(new wxButton(this, -1, wxT("Three")), 0, wxEXPAND);
-  gs->Add(new wxButton(this, -1, wxT("Four")), 0, wxEXPAND);
+  gs->Add(new wxButton(this, MENU_INV_Open, wxT("InvOpen")), 0, wxEXPAND);
 
   sizer->Add(gs, 0, wxEXPAND);
 
@@ -58,7 +60,7 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
   SetStatusText(_("And there"), 0);
 
   Bind(wxEVT_MENU, &MainFrame::Quit, this, wxID_EXIT);
-  Bind(wxEVT_MENU, &MainFrame::OpenFile, this, MENU_INV_Open);
+  Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OpenFile, this, MENU_INV_Open);
   //    Maximize();
 }
 
