@@ -1,5 +1,6 @@
 
 .idea/*
+xcode/*
 
 ./cmake-build-debug/
 ./build/

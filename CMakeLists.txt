@@ -11,9 +11,9 @@ find_package(wxWidgets REQUIRED COMPONENTS core base)
 include("${wxWidgets_USE_FILE}")
 DBG_MSG("found wxWidgets_USE_FILE : ${wxWidgets_USE_FILE}")
 
-set (SRCS main.cpp main.h MainFrame.cpp MainFrame.h InventoryDocument.cpp InventoryDocument.h InvStockItem.cpp InvStockItem.h)
+set (SRCS main.cpp main.h MainFrame.cpp MainFrame.h InventoryDocument.cpp InventoryDocument.h InvStockItem.cpp InvStockItem.h sqlite3.c sqlite3.h)
 
 add_executable(HandRec ${SRCS})
 #add_executable(first_wx_app main.cpp main.h)
 
-target_link_libraries(HandRec ${wxWidgets_LIBRARIES} sqlite3)
+target_link_libraries(HandRec ${wxWidgets_LIBRARIES} )

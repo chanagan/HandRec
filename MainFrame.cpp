@@ -3,6 +3,8 @@
 //
 #include <wx/textfile.h>
 #include <wx/arrstr.h>
+#include "sqlite3.h"
+
 #include "MainFrame.h"
 #include "InventoryDocument.h"
 //#include "InvStockItem.h"
@@ -59,6 +61,15 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
   SetStatusText(_("Here we are"), 1);
   SetStatusText(_("And there"), 0);
 
+    sqlite3 *db;
+    
+    int rc = sqlite3_open("test.db", &db);
+    if (rc ) {
+        SetStatusText(_("No open db"), 1);
+    } else {
+        SetStatusText(_("Data base opened"),1);
+        sqlite3_close(db);
+    }
   Bind(wxEVT_MENU, &MainFrame::Quit, this, wxID_EXIT);
   Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OpenFile, this, MENU_INV_Open);
   //    Maximize();
@@ -100,6 +111,7 @@ void MainFrame::OpenFile(wxCommandEvent &event)
   }
   if (got_file)
   {
+      SetStatusText(_("Got the file"), 1);
 
     // load the inventory document
     inventory->LoadInventory(CurrentDocPath);
